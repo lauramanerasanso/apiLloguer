@@ -474,7 +474,7 @@ class casa
         (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
         AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id";
 
-
+print_r($query);
         $stmt = $this->conexio->prepare($query);
         $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
         $stmt->execute();
