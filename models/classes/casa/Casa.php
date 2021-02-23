@@ -472,10 +472,10 @@ class casa
         JOIN imatge ON casa.id = imatge.casa_id 
         JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
         WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
-        (SELECT casa_id FROM reserva WHERE ((".$dataInici.") BETWEEN data_inici AND data_fi ) OR ((".$dataFi.") BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (".$dataInici.") AND (".$dataFi.") )) 
+        (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
         AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id");
         
-       // $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
+        $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
         $stmt->execute();
 
         $result = $stmt->get_result();
