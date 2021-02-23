@@ -466,16 +466,14 @@ class casa
         ".$filtreCaract." GROUP BY casa.id";
         
 
-        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions 
+        
+        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions 
         FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id 
         JOIN imatge ON casa.id = imatge.casa_id 
         JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
         WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
         (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
-        AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id";
-
-print_r($query);
-        $stmt = $this->conexio->prepare($query);
+        AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id");
         $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
         $stmt->execute();
 
