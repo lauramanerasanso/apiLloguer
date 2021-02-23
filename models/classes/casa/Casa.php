@@ -472,7 +472,7 @@ class casa
         JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
         WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
         (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
-        AND caracteristicaCasa.caracteristica_id IN (1, 3, 5) GROUP BY casa.id";
+        AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id";
 
 
         $stmt = $this->conexio->prepare($query);
