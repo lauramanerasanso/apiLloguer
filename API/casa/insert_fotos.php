@@ -15,7 +15,7 @@ include_once('models/classes/casa/Poblacio.php');
 
       $nom = $id."_".$contador.".jpg";
 
-      $ruta =  "../backLloguerVacacional/imatges/" .$nom;
+      $ruta =  "../RutesLloguer/imatges/" .$nom;
       $imageFileType = pathinfo($ruta, PATHINFO_EXTENSION);
       $imageFileType = strtolower($imageFileType);
       $temp = $f['tmp_name'];
@@ -44,7 +44,7 @@ include_once('models/classes/casa/Poblacio.php');
 
   $cont->inserirFotos($id,$f1,$f2,$f3,$f4,$f5);
 
-  header("Location: http://admin.mallorcarustic.me/cases");
+  //header("Location: ../../cases");
 
 
 

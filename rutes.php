@@ -26,7 +26,11 @@
      'casa/editar-bloqueig' => 'API/casa/updateBloqueig.php',
      'reserves/grafic-pie' => 'API/casa/select_graficPie.php',
      'reserves/grafic-bar' => 'API/casa/select_graficBar.php',
-
+     'cases' => 'API/casa/selectCasesCerca.php',
+     'caracteristiques/llegir' => 'API/casa/selectCaracteristiques.php',
+     'filtrarCaracteristiques' => 'API/casa/filtrarCaracteristiques.php',
+     'casa/llegir-casa' => 'API/casa/select_casa.php',
+     'casa/llegir-caract' => 'API/casa/selectCaract.php',
 
 
  ]);

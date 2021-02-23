@@ -6,7 +6,6 @@ include_once('models/classes/casa/Casa.php');
 
 
 
-
 if(isset($_POST['idCasa']) && isset($_POST['dataInici']) && isset($_POST['dataFi'])){
 
     $controlador = new controlador_casa();

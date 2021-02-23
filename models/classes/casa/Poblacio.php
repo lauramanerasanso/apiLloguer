@@ -22,7 +22,6 @@ class Poblacio
         $stmt->bind_param("ss", $this->nom,$this->nom);
         $stmt->execute();
 
-
         return $stmt;
 
     }

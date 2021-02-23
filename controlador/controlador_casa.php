@@ -423,6 +423,57 @@ class controlador_casa
 
     }
 
+    public function selectCasesCerca($dataInici, $dataFi){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
 
+        $result = $casa->selectCasesCerca($dataInici, $dataFi);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
+    }
+
+    public function selectCaract($idIdioma){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->selectCaract($idIdioma);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
+    }
+
+    public function filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+        
+        $result = $casa->filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
+    }
+
+    public function selectCasa($id,$idioma){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+        $result = $casa->selectCasa($id,$idioma);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
+    }
+
+    public function mostrarCaracteristiques($id,$idioma){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+        $result = $casa->selectCaracteristiques($id,$idioma);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
+    }
 
 }

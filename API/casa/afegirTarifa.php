@@ -4,7 +4,6 @@ include_once('models/config/DataBase.php');
 include_once('models/classes/casa/Casa.php');
 
 
-
 if(isset($_POST['idCasa']) && isset($_POST['preuTarifa']) && isset($_POST['dataInici']) && isset($_POST['dataFi']) && isset($_POST['nomTarifa'])){
 
 

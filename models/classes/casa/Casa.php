@@ -32,7 +32,7 @@ class casa
     public function select()
     {
 
-        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA';";
+        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA';";
 
         $stmt = $this->conexio->prepare($query);
         $stmt->execute();
@@ -406,7 +406,7 @@ class casa
 
     public function select_graficPie(){
 
-        $stmt = $this->conexio->prepare("SELECT count(reserva.casa_id) as cont, traduccioCasa.traduccioNom  from reserva, traduccioCasa WHERE traduccioCasa.casa_id = reserva.casa_id and traduccioCasa.idioma_id = 'CA' GROUP BY reserva.casa_id;");
+        $stmt = $this->conexio->prepare("SELECT count(reserva.casa_id) as cont, traducciocasa.traduccioNom  from reserva, traducciocasa WHERE traducciocasa.casa_id = reserva.casa_id and traducciocasa.idioma_id = 'CA' GROUP BY reserva.casa_id;");
         $stmt->execute();
 
         $resultat = $stmt->get_result();
@@ -423,9 +423,85 @@ class casa
         return $resultat;
     }
 
+    public function selectCasesCerca($dataInici, $dataFi){
+                //SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN (SELECT casa_id FROM reserva WHERE ('2021-03-01' BETWEEN data_inici AND data_fi ) OR ('2021-03-29' BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN '2021-03-01' AND '2021-03-29' ));
+        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) ))";
+
+        $stmt = $this->conexio->prepare($query);
+        $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function selectCaract($idIdioma){
+        $query = "SELECT * FROM traduccioCaracteristica WHERE idioma_id = ? ";
+
+        $stmt = $this->conexio->prepare($query);
+        $stmt->bind_param("s", $idIdioma);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function filtrarCaracteristiques($dataInici, $dataFi, $caract){
+        $caracteristiques = explode(",", $caract);
+
+        $filtreCaract = '';
+
+        for($i = 0 ; $i < count($caracteristiques) ; $i++){
+            $filtreCaract .= " AND caracteristicaCasa.caracteristica_id = ". $caracteristiques[$i] ." ";
+        }
+
+        $query1 = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions 
+        FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id 
+        JOIN imatge ON casa.id = imatge.casa_id 
+        JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
+        WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
+        (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
+        ".$filtreCaract." GROUP BY casa.id";
+        
+
+        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions 
+        FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id 
+        JOIN imatge ON casa.id = imatge.casa_id 
+        JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
+        WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
+        (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
+        AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id";
 
 
+        $stmt = $this->conexio->prepare($query);
+        $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
+        $stmt->execute();
 
+        $result = $stmt->get_result();
+        
+        return $result;
+    }
 
+    public function selectCasa($id,$idioma){
+        $stmt = $this->conexio->prepare("SELECT casa.id, casa.nBanys, casa.nHabitacions, casa.x, casa.y, poblacio.nom, imatge.img_principal, imatge.img_2, imatge.img_3, imatge.img_4, imatge.img_5, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio FROM casa JOIN poblacio ON poblacio.id=casa.poblacio_id JOIN imatge ON imatge.casa_id = casa.id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id WHERE traduccioCasa.idioma_id = ? AND casa.id = ?;");
+        $stmt->bind_param("si", $idioma,$id);
+        $stmt->execute();
+
+        $resultat = $stmt->get_result();
+
+        return $resultat;
+    }
+
+    public function selectCaracteristiques($id,$idioma){
+        $stmt = $this->conexio->prepare("SELECT traduccioCaracteristica.caracteristica_id, traduccioCaracteristica.traduccioNom FROM traduccioCaracteristica JOIN caracteristicaCasa ON traduccioCaracteristica.caracteristica_id = caracteristicaCasa.caracteristica_id WHERE traduccioCaracteristica.idioma_id = ? AND caracteristicaCasa.casa_id = ?;");
+        $stmt->bind_param("si", $idioma,$id);
+        $stmt->execute();
+
+        $resultat = $stmt->get_result();
+
+        return $resultat;
+    }
 
 }

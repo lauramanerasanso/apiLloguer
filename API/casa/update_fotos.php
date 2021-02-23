@@ -14,7 +14,7 @@ if (isset($_REQUEST['idCasa']) && isset($_REQUEST['idImg'])) {
 
     $nom = $id . "_" . $idImg . ".jpg";
 
-    $ruta = "../backLloguerVacacional/imatges/" . $nom;
+    $ruta = "../RutesLloguer/imatges/" . $nom;
     $rutaVista = "../imatges/" . $nom;
     $imageFileType = pathinfo($ruta, PATHINFO_EXTENSION);
     $imageFileType = strtolower($imageFileType);
