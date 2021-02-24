@@ -49,4 +49,39 @@ class userControlador
         }
         echo json_encode($s);
     }
+
+    public function login($userName, $passwd)
+    {
+
+        $db = DataBase::getConn();
+
+        $user = new User($db);
+        $user->setUserName($userName);
+        $user->setPassword($passwd);
+
+        $result = $user->loginClient();
+
+
+        return $result;
+
+    }
+
+    public function comprovarlogin($email,$token)
+    {
+
+        $db = DataBase::getConn();
+
+        $user = new User($db);
+        $user->setUserName($email);
+
+
+        $result = $user->comprovarLogin($token);
+
+        if($result > 0){
+            return true;
+        }
+
+        return false;
+
+    }
 }
