@@ -406,7 +406,8 @@ class casa
 
     public function select_graficPie(){
 
-        $stmt = $this->conexio->prepare("SELECT count(reserva.casa_id) as cont, traducciocasa.traduccioNom  from reserva, traducciocasa WHERE traducciocasa.casa_id = reserva.casa_id and traducciocasa.idioma_id = 'CA' GROUP BY reserva.casa_id;");
+        $stmt = $this->conexio->prepare("SELECT count(reserva.casa_id) as cont, traduccioCasa.traduccioNom  from reserva, traduccioCasa WHERE traduccioCasa.casa_id = reserva.casa_id and traduccioCasa.idioma_id = 'CA' GROUP BY reserva.casa_id;");
+        
         $stmt->execute();
 
         $resultat = $stmt->get_result();
