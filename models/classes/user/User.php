@@ -96,4 +96,32 @@ class User{
 
         return $stmt;
     }
+
+    public function loginClient(){
+        $sql = "SELECT token FROM usuari WHERE email=? AND contrasenya = ? AND verificat != 0";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $this->userName,$this->password);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+
+        return $row['token'];
+    }
+
+    public function comprovarLogin($token){
+        $sql = "SELECT count(*) FROM usuari WHERE email=? AND token = ? AND verificat != 0";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $this->userName,$token);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+
+        return $row['count(*)'];
+    }
 }

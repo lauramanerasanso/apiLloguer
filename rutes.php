@@ -31,6 +31,8 @@
      'filtrarCaracteristiques' => 'API/casa/filtrarCaracteristiques.php',
      'casa/llegir-casa' => 'API/casa/select_casa.php',
      'casa/llegir-caract' => 'API/casa/selectCaract.php',
+     'usuari/login' => 'API/user/loginClient.php',
+     'usuari/comprovar-login' =>'API/user/comprovarLogin.php',
 
 
  ]);
