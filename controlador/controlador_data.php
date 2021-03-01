@@ -2,6 +2,7 @@
 
 
 class controlador_data{
+    
     public $dades = [];
 
     public function arrayDies($id_casa, $mes){
@@ -29,22 +30,13 @@ class controlador_data{
 
             if($isReservat > 0){
                 array_push($info, array("estat"=>"reservat", "preu"=>$preu));
-
             }else if($isBloquetjat > 0){
                 array_push($info, array("estat"=>"bloquetjat", "preu"=>$preu));
-
             }else{
                 array_push($info, array("estat"=>"lliure", "preu"=>$preu));
-
-
             }
-
-
-
         }
-
         echo json_encode( $info );
-
     }
 
     public function datesReservat($id_casa, $mes){
@@ -67,7 +59,6 @@ class controlador_data{
             }else{
                 $this->dades[$i] = array("estat"=>"lliure");
             }
-
         }
     }
 
@@ -101,36 +92,97 @@ class controlador_data{
 
         $dates = new Data($db);
         $dates->setIdCasa($id_casa);
+        
+        $datesReserva = [];
 
+        $result=$dates->selectDatesReservaFront();
 
-        $result=$dates->selectDatesReserva();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
 
-        $row = $result->fetch_assoc();
+                $_data = $dates->whileDates($row);
 
-        while($row = $result->fetch_assoc()) {
-            $anyInici = $row['YEAR(data_inici)'];
-            $mesInici = $row['MONTH(data_inici)'];
-            $diaInici = $row['DAY(data_inici)'];
+                $dates->setDataInici($row['data_inici']);
+                $dates->setDataFi($row['data_fi']);
 
-            $_data = [
-                "year" => $anyInici,
-                "month" => $mesInici,
-                "day" => $diaInici
-            ];;
+                $count = $dates->intervalEnDies();
 
-            $dates->setDataInici($row['data_inici']);
-            $dates->setDataFi($row['data_fi']);
+                array_push($datesReserva, $_data);
 
-            $count = $dates->intervalEnDies();
+                for ($i = 0; $i < $count ; $i++){
+                    
+                    $_datan = $dates->treuTotsElsDies();
+                    $dates->setDataInici($_datan);
 
-            $datesReserva = [];
-
-            array_push($datesReserva, $_data);
-
-            for ($i = 0; $i < $count ; $i++){
-
+                    array_push($datesReserva, $_datan);
+                }
             }
         }
+        
+        $resultat=$dates->selectDatesBloqueigFront();
 
+        if ($resultat->num_rows > 0) {
+            while($row = $resultat->fetch_assoc()) {
+
+                $_data = $dates->whileDates($row);
+
+                $dates->setDataInici($row['data_inici']);
+                $dates->setDataFi($row['data_fi']);
+
+                $count = $dates->intervalEnDies();
+
+                array_push($datesReserva, $_data);
+
+                for ($i = 0; $i < $count ; $i++){
+                   
+                    $_datan = $dates->treuTotsElsDies();
+                    $dates->setDataInici($_datan);
+
+                    array_push($datesReserva, $_datan);
+                }
+            }
+        }
+        return $datesReserva;
+    }
+
+    public function preuTotalDates($id_casa, $dataInici, $dataFi){
+
+        $db = DataBase::getConn();
+
+        $dates = new Data($db);
+
+        $dates->setIdCasa($id_casa);
+        $dates->setDataInici($dataInici);
+        $dates->setDataFi($dataFi);
+
+        $preuTotal = 0;
+
+        $result = $dates->selectPreuTarifaPerDia();
+
+        if (mysqli_num_rows($result)==0) {
+            
+            $preuTotal += $dates->selectPreuTarifaDefault();
+
+        }else{
+            $row = $result->fetch_assoc();
+
+            $preuTotal += $row['preu_tarifa'];
+        }
+
+        $count = $dates->intervalEnDies();
+
+        for ($i = 0; $i < $count -1 ; $i++){
+            $_datan = $dates->treuTotsElsDies();
+            $dates->setDataInici($_datan);
+            $result = $dates->selectPreuTarifaPerDia();
+
+            if (mysqli_num_rows($result)==0) {
+                $preuTotal += $dates->selectPreuTarifaDefault();
+            }else{
+                $row = $result->fetch_assoc();
+                $preuTotal += $row['preu_tarifa'];
+            }
+        }
+        return $preuTotal;
     }
 }

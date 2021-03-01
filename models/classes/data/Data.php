@@ -121,7 +121,7 @@ class Data{
         return $row['inter'];
     }
 
-    public function teuTotsElsDies(){
+    public function treuTotsElsDies(){
         $sql = "SELECT DATE_ADD(?,INTERVAL 1 DAY) as dia;";
 
         $stmt = $this->conn->prepare($sql);
@@ -145,5 +145,70 @@ class Data{
         $row = $result->fetch_assoc();
 
         return $row['dia'];
+    }
+
+    public function selectPreuTarifaPerDia(){
+        $sql = "SELECT tarifa.preu_tarifa FROM tarifa WHERE ? BETWEEN tarifa.data_inici AND tarifa.data_fi AND tarifa.casa_id = ?;";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $this->data_inici, $this->id_casa);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function selectPreuTarifaDefault(){
+        $sql = "SELECT casa.tarifaDefault FROM casa WHERE casa.id = ?;";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $this->id_casa);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['tarifaDefault'];
+    }
+
+    public function whileDates($row){
+        $anyInici = $row['YEAR(data_inici)'];
+        $mesInici = $row['MONTH(data_inici)'];
+        $diaInici = $row['DAY(data_inici)'];
+        if(strlen($mesInici)===1){
+            $mesInici = "0".$mesInici;
+        }
+        if(strlen($diaInici)===1){
+            $diaInici = "0".$diaInici;
+        }
+        $_data = $anyInici."-".$mesInici."-".$diaInici;
+        return $_data;
+    }
+
+    public function selectDatesReservaFront(){
+
+        $sql = "SELECT YEAR(data_inici), MONTH(data_inici), DAY(data_inici), data_inici, data_fi FROM reserva WHERE casa_id=? ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $this->id_casa);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        
+
+        return $result;
+    }
+
+    public function selectDatesBloqueigFront(){
+        $sql = "SELECT YEAR(data_inici), MONTH(data_inici), DAY(data_inici), data_inici, data_fi FROM bloqueig WHERE casa_id=?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $this->id_casa);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
     }
 }

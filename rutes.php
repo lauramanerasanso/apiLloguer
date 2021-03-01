@@ -33,6 +33,7 @@
      'casa/llegir-caract' => 'API/casa/selectCaract.php',
      'usuari/login' => 'API/user/loginClient.php',
      'usuari/comprovar-login' =>'API/user/comprovarLogin.php',
-
+     'dates' => 'API/data/diesOcupat.php',
+     'dates/preuTotal' => 'API/data/getPreuTotal.php',
 
  ]);
