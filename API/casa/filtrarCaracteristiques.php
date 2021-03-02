@@ -6,25 +6,33 @@ include_once('models/classes/casa/Poblacio.php');
 
 $controlador = new controlador_casa();
 
-if(isset($_POST['dataInici']) && isset($_POST['dataFi']) && isset($_POST['array'])) {
+if(isset($_POST['dataInici']) && isset($_POST['dataFi']) && isset($_POST['array']) && isset($_POST['idioma'])) {
 
     $dataInici = $_POST['dataInici'];
     $dataFi = $_POST['dataFi'];
     $array = $_POST['array'];
+    $idioma = $_POST['idioma'];
 
-    $result = $controlador->filtrarCaracteristiques($dataInici, $dataFi, $array);
+    if(empty($array)){
+        $result = $controlador->selectIdioma($idioma);
+    }else{
+
+        $result = $controlador->filtrarCaracteristiques($dataInici, $dataFi, $array,$idioma);
+    }
     echo $result;
-    
-}else if(isset($_POST['array'])){
-    
+
+}else if(isset($_POST['array']) && isset($_POST['idioma'])){
+
     $dataInici = '';
     $dataFi = '';
     $array = $_POST['array'];
-    
-    $result = $controlador->filtrarCaracteristiques($dataInici, $dataFi, $array);
-    echo $result;
-}else{
+    $idioma = $_POST['idioma'];
 
-    $result = $controlador->select();
+    if(empty($array)){
+        $result = $controlador->selectIdioma($idioma);
+    }else{
+
+    $result = $controlador->filtrarCaracteristiques($dataInici, $dataFi, $array,$idioma);
+        }
     echo $result;
 }

@@ -423,11 +423,11 @@ class controlador_casa
 
     }
 
-    public function selectCasesCerca($dataInici, $dataFi){
+    public function selectCasesCerca($dataInici, $dataFi,$idioma){
         $con_db = DataBase::getConn();
         $casa = new Casa($con_db);
 
-        $result = $casa->selectCasesCerca($dataInici, $dataFi);
+        $result = $casa->selectCasesCerca($dataInici, $dataFi,$idioma);
 
         $outp = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -445,11 +445,11 @@ class controlador_casa
         echo json_encode($outp);
     }
 
-    public function filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques){
+    public function filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques, $idioma){
         $con_db = DataBase::getConn();
         $casa = new Casa($con_db);
         
-        $result = $casa->filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques);
+        $result = $casa->filtrarCaracteristiques($dataInici, $dataFi, $caracteristiques, $idioma);
 
         $outp = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -475,5 +475,20 @@ class controlador_casa
 
         echo json_encode($outp);
     }
+
+    public function selectIdioma($idioma)
+    {
+
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->selectIdioma($idioma);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        return $outp;
+
+
+    }
+
 
 }

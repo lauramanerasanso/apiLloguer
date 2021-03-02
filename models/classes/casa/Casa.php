@@ -424,12 +424,12 @@ class casa
         return $resultat;
     }
 
-    public function selectCasesCerca($dataInici, $dataFi){
+    public function selectCasesCerca($dataInici, $dataFi,$idioma){
                 //SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN (SELECT casa_id FROM reserva WHERE ('2021-03-01' BETWEEN data_inici AND data_fi ) OR ('2021-03-29' BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN '2021-03-01' AND '2021-03-29' ));
-        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) ))";
+        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id=? AND casa.id NOT IN (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) ))";
 
         $stmt = $this->conexio->prepare($query);
-        $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
+        $stmt->bind_param("sssss", $idioma ,$dataInici, $dataFi, $dataInici, $dataFi);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -449,7 +449,7 @@ class casa
         return $result;
     }
 
-    public function filtrarCaracteristiques($dataInici, $dataFi, $caract){
+    public function filtrarCaracteristiques($dataInici, $dataFi, $caract,$idioma){
         $caracteristiques = explode(",", $caract);
 
         $filtreCaract = '';
@@ -472,11 +472,11 @@ class casa
         FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id 
         JOIN imatge ON casa.id = imatge.casa_id 
         JOIN caracteristicaCasa ON caracteristicaCasa.casa_id = casa.id 
-        WHERE traduccioCasa.idioma_id='CA' AND casa.id NOT IN 
+        WHERE traduccioCasa.idioma_id=? AND casa.id NOT IN 
         (SELECT casa_id FROM reserva WHERE ((?) BETWEEN data_inici AND data_fi ) OR ((?) BETWEEN data_inici AND data_fi ) OR ( data_inici BETWEEN (?) AND (?) )) 
         AND caracteristicaCasa.caracteristica_id IN (".$caract.") GROUP BY casa.id");
         
-        $stmt->bind_param("ssss", $dataInici, $dataFi, $dataInici, $dataFi);
+        $stmt->bind_param("sssss",$idioma, $dataInici, $dataFi, $dataInici, $dataFi);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -502,6 +502,21 @@ class casa
         $resultat = $stmt->get_result();
 
         return $resultat;
+    }
+
+    public function selectIdioma($idioma)
+    {
+
+        $query = "SELECT casa.id, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, imatge.img_principal, casa.nBanys, casa.nHabitacions FROM casa JOIN traduccioCasa ON casa.id = traduccioCasa.casa_id JOIN imatge ON casa.id = imatge.casa_id WHERE traduccioCasa.idioma_id=?;";
+
+        $stmt = $this->conexio->prepare($query);
+        $stmt->bind_param("s", $idioma);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
+
     }
 
 }

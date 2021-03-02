@@ -6,9 +6,9 @@ include_once('models/classes/casa/Poblacio.php');
 
 $controlador = new controlador_casa();
 
-if(isset($_POST['idIdioma'])) {
+if(isset($_POST['idioma'])) {
 
-    $idIdioma = $_POST['idIdioma'];
+    $idIdioma = $_POST['idioma'];
 
     $result = $controlador->selectCaract($idIdioma);
     echo $result; 

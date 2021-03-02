@@ -108,6 +108,10 @@ class User{
 
         $row = $result->fetch_assoc();
 
+        if(!isset($row['token'])){
+            return false;
+        }
+
         return $row['token'];
     }
 
