@@ -485,7 +485,7 @@ class controlador_casa
         $result = $casa->selectIdioma($idioma);
 
         $outp = $result->fetch_all(MYSQLI_ASSOC);
-        return $outp;
+        return json_encode($outp);
 
 
     }
