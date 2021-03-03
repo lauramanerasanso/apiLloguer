@@ -489,6 +489,33 @@ class controlador_casa
 
 
     }
+    public function mostrarReserves($token,$idioma,$data)
+    {
+
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->mostrarReserves($token,$idioma,$data);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($outp);
+
+
+    }
+
+    public function proximesReserves($token,$idioma,$data)
+    {
+
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->proximesReserves($token,$idioma,$data);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($outp);
+
+
+    }
 
 
 }
