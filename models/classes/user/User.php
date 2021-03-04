@@ -128,4 +128,44 @@ class User{
 
         return $row['count(*)'];
     }
+    public function selectPass($token){
+        $sql = "SELECT contrasenya FROM usuari WHERE token = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $token);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['contrasenya'];
+    }
+
+    public function selectID($token){
+        $sql = "SELECT id FROM usuari WHERE token = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $token);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['id'];
+
+    }
+
+    public function canviarPass($id){
+        $sql = "UPDATE usuari SET contrasenya = ? WHERE id = ?;";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $this->password,$id);
+        $stmt->execute();
+
+
+
+        return $stmt->affected_rows;
+    }
 }

@@ -36,6 +36,7 @@
      'dates' => 'API/data/diesOcupat.php',
      'dates/preuTotal' => 'API/data/getPreuTotal.php',
      'client/reserves' => 'API/casa/mostrarReserves.php',
-     'client/proximes-reserves' => 'API/casa/proximesReserves.php'
+     'client/proximes-reserves' => 'API/casa/proximesReserves.php',
+     'client/canviar-password' => 'API/user/canviarPassword.php'
 
  ]);

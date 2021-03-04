@@ -84,4 +84,37 @@ class userControlador
         return false;
 
     }
+
+    public function canviarPasswordCLient($token,$actual, $nova)
+    {
+        $db = DataBase::getConn();
+
+        $user = new User($db);
+        $user->setPassword($actual);
+
+        $result = $user->selectPass($token);
+
+
+
+        if ($actual == $result) {
+            $user1 = new User($db);
+            $user1->setPassword($nova);
+            $id = $user1->selectID($token);
+            $res = $user1->canviarPass($id);
+
+            if ($res > 0) {
+
+                return true;
+
+            }else{
+                return false;
+            }
+
+
+
+        } else {
+
+           return false;
+        }
+
 }
