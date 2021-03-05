@@ -520,7 +520,7 @@ class casa
     }
 
     public function mostrarReserves($token,$idioma,$data){
-        $query = "SELECT poblacio.nom, traduccioCasa.traduccioNom,traduccioCasa.tradDescripcio,reserva.casa_id,  DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada,  DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.data_reserva, reserva.preu_final from reserva, usuari, casa, traduccioCasa, poblacio WHERE reserva.usuari_id = usuari.id AND casa.id = traduccioCasa.casa_id AND casa.id = reserva.casa_id AND poblacio.id = casa.poblacio_id AND usuari.token = ? AND traduccioCasa.idioma_id = ? AND reserva.data_inici < ? ORDER BY reserva.data_reserva desc";
+        $query = "SELECT poblacio.nom, traduccioCasa.traduccioNom,traduccioCasa.tradDescripcio,reserva.casa_id,  DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada,  DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.data_reserva, reserva.preu_final, reserva.data_inici  from reserva, usuari, casa, traduccioCasa, poblacio WHERE reserva.usuari_id = usuari.id AND casa.id = traduccioCasa.casa_id AND casa.id = reserva.casa_id AND poblacio.id = casa.poblacio_id AND usuari.token = ? AND traduccioCasa.idioma_id = ? AND reserva.data_inici < ? ORDER BY reserva.data_reserva desc";
         $stmt = $this->conexio->prepare($query);
         $stmt->bind_param("sss",$token, $idioma,$data);
         $stmt->execute();
@@ -533,7 +533,7 @@ class casa
 
     public function proximesReserves($token,$idioma, $data){
 
-        $query = "SELECT poblacio.nom, traduccioCasa.traduccioNom,traduccioCasa.tradDescripcio,reserva.casa_id,  DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada,  DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.data_reserva, reserva.preu_final from reserva, usuari, casa, traduccioCasa, poblacio WHERE reserva.usuari_id = usuari.id AND casa.id = traduccioCasa.casa_id AND casa.id = reserva.casa_id AND poblacio.id = casa.poblacio_id AND usuari.token = ? AND traduccioCasa.idioma_id = ? AND reserva.data_inici > ? ORDER BY reserva.data_reserva desc";
+        $query = "SELECT poblacio.nom, traduccioCasa.traduccioNom,traduccioCasa.tradDescripcio,reserva.casa_id,  DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada,  DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.data_reserva, reserva.preu_final, reserva.data_inici  from reserva, usuari, casa, traduccioCasa, poblacio WHERE reserva.usuari_id = usuari.id AND casa.id = traduccioCasa.casa_id AND casa.id = reserva.casa_id AND poblacio.id = casa.poblacio_id AND usuari.token = ? AND traduccioCasa.idioma_id = ? AND reserva.data_inici > ? ORDER BY reserva.data_reserva desc";
         $stmt = $this->conexio->prepare($query);
         $stmt->bind_param("sss",$token, $idioma,$data);
         $stmt->execute();
