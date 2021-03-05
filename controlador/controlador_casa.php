@@ -503,8 +503,7 @@ class controlador_casa
 
     }
 
-    public function proximesReserves($token,$idioma,$data)
-    {
+    public function proximesReserves($token,$idioma,$data){
 
         $con_db = DataBase::getConn();
         $casa = new Casa($con_db);
@@ -515,6 +514,18 @@ class controlador_casa
         echo json_encode($outp);
 
 
+    }
+
+    public function selectReserva($idioma, $data_inici, $idCasa){
+
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->selectReserva($idioma, $data_inici, $idCasa);
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        echo json_encode($outp);
     }
 
 

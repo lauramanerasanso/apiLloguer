@@ -543,5 +543,17 @@ class casa
         return $result;
     }
 
+    public function selectReserva($idioma, $data_inici, $idCasa){
+            //SELECT reserva.casa_id, DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada, DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.preu_final, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, usuari.DNI, usuari.email, poblacio.nom FROM reserva JOIN casa ON reserva.casa_id = casa.id JOIN traduccioCasa ON reserva.casa_id = traduccioCasa.casa_id JOIN usuari ON usuari.id = reserva.usuari_id JOIN poblacio ON poblacio.id = casa.poblacio_id WHERE traduccioCasa.idioma_id = 'CA' AND reserva.data_inici='2021-02-23' AND reserva.casa_id=2
+    $query = "SELECT reserva.casa_id, DATE_FORMAT(reserva.data_inici,'%d-%m-%Y') as entrada, DATE_FORMAT(reserva.data_fi,'%d-%m-%Y') as sortida, reserva.preu_final, traduccioCasa.traduccioNom, traduccioCasa.tradDescripcio, usuari.DNI, usuari.email, poblacio.nom FROM reserva JOIN casa ON reserva.casa_id = casa.id JOIN traduccioCasa ON reserva.casa_id = traduccioCasa.casa_id JOIN usuari ON usuari.id = reserva.usuari_id JOIN poblacio ON poblacio.id = casa.poblacio_id WHERE traduccioCasa.idioma_id = ?  AND reserva.data_inici=? AND reserva.casa_id=?";
+    $stmt = $this->conexio->prepare($query);
+    $stmt->bind_param("ssi",$idioma, $data_inici, $idCasa);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    return $result;
+    }
+
 
 }
