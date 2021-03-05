@@ -38,6 +38,7 @@
      'client/reserves' => 'API/casa/mostrarReserves.php',
      'client/proximes-reserves' => 'API/casa/proximesReserves.php',
      'client/canviar-password' => 'API/user/canviarPassword.php',
-     'client/crear' => 'API/client/afegirClient.php'
+     'client/crear' => 'API/client/afegirClient.php',
+     'reserva/informacio' => 'API/casa/selectReserva.php'
 
  ]);
