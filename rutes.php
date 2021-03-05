@@ -40,6 +40,6 @@
      'client/canviar-password' => 'API/user/canviarPassword.php',
      'client/crear' => 'API/client/afegirClient.php',
      'reserva/informacio' => 'API/casa/selectReserva.php',
-     'propietari' => 'API/user/selectPropietari.php',
+     'propietari' => 'API/user/SelectPropietari.php',
 
  ]);
