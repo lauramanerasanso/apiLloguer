@@ -50,6 +50,8 @@ class userControlador
         echo json_encode($s);
     }
 
+
+
     public function login($userName, $passwd)
     {
 
@@ -116,6 +118,20 @@ class userControlador
 
            return false;
         }
+
     }
+
+    public function selectPropietari(){
+
+        $con_db = DataBase::getConn();
+        $user = new User($con_db);
+
+        $result = $user->selectPropietari();
+
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $outp;
+    }
+
 
 }

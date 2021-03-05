@@ -128,6 +128,7 @@ class User{
 
         return $row['count(*)'];
     }
+
     public function selectPass($token){
         $sql = "SELECT contrasenya FROM usuari WHERE token = ?";
 
@@ -167,5 +168,16 @@ class User{
 
 
         return $stmt->affected_rows;
+    }
+
+    public function selectPropietari(){
+        $sql = "SELECT telefon, email FROM propietari;";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
     }
 }

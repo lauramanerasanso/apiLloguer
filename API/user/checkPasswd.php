@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once 'models/classes/user/User.php';
-include_once 'models/config/DataBase.php';
+include_once('models/config/DataBase.php');
 include_once 'controlador/userControlador.php';
 
 
