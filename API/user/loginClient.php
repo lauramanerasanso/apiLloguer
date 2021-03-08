@@ -12,14 +12,16 @@ if (isset($_POST['usuari']) && isset($_POST['password'])) {
     $controlador = new userControlador();
     $token = $controlador->login($userName, $passwd);
 
+    // the message
+    $msg = "Has iniciat sessió!";
+
+    // send email
+    mail("lauraams99@gmail.com","Inici de sessió",$msg);
+
     if ($token != "") {
 
-        // the message
-        $msg = "Has iniciat sessió!";
-
-        // send email
-        mail("lauraams99@gmail.com","Inici de sessió",$msg);
         
+
         echo json_encode([
             'success' => true,
             'token' => $token,
