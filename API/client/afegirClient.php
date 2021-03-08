@@ -25,7 +25,7 @@ if(isset($_POST['nom']) && isset($_POST['llinatge1']) && isset($_POST['llinatge2
     $idClient =  $controlador->insertClient($nom, $llinatge1, $llinatge2, $DNI, $telefon, $email, $password, $poblacio);
 
     // the message
-    $msg = "T'has registrat a MallorcaRustic.me !";
+    $msg = "T'has registrat a MallorcaRustic.me!";
 
     // send email
     mail($email,"Registre",$msg);
