@@ -12,7 +12,8 @@ if(isset($_POST['token']) && isset($_POST['idioma']) && isset($_POST['data'])) {
         $msg = "Missatge de prova!";
 
         // send email
-        mail("lauraams99@gmail.com","Prova 1",$msg);
+        mail("lauraams99@gmail.com","Estàs mirant les reserves",$msg);
+        
     $token = $_POST['token'];
     $idioma = $_POST['idioma'];
     $data = $_POST['data'];

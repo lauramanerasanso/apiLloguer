@@ -24,6 +24,12 @@ if(isset($_POST['nom']) && isset($_POST['llinatge1']) && isset($_POST['llinatge2
 
     $idClient =  $controlador->insertClient($nom, $llinatge1, $llinatge2, $DNI, $telefon, $email, $password, $poblacio);
 
+    // the message
+    $msg = "T'has registrat a MallorcaRustic.me !";
+
+    // send email
+    mail($email,"Registre",$msg);
+
 } else if (isset($_POST['nom']) && isset($_POST['llinatge1']) && isset($_POST['llinatge2']) && isset($_POST['DNI']) && !isset($_POST['telefon']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['poblacio'])){
 
   $controlador = new controlador_client();
@@ -38,5 +44,9 @@ if(isset($_POST['nom']) && isset($_POST['llinatge1']) && isset($_POST['llinatge2
   $poblacio = $_POST['poblacio'];
 
   $idClient =  $controlador->insertClient($nom, $llinatge1, $llinatge2, $DNI, $telefon, $email, $password, $poblacio);
+  // the message
+  $msg = "T'has registrat a MallorcaRustic.me !";
 
+  // send email
+  mail($email,"Registre",$msg);
 }
