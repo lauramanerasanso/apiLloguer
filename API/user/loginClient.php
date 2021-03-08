@@ -14,6 +14,12 @@ if (isset($_POST['usuari']) && isset($_POST['password'])) {
 
     if ($token != "") {
 
+        // the message
+        $msg = "Has iniciat sessió!";
+
+        // send email
+        mail("lauraams99@gmail.com","Inici de sessió",$msg);
+        
         echo json_encode([
             'success' => true,
             'token' => $token,
