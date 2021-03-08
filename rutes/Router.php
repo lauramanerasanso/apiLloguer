@@ -53,7 +53,7 @@ class Router
             return $route_file;
         }
 
-        throw new Exception('No hi ha ruta Definida per aquesta URI.');
+        throw new Exception('No hi ha ruta Definida per aquesta URI.'. $uri_array);
     }
 
 
