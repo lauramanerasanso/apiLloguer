@@ -44,7 +44,8 @@ include_once('models/classes/casa/Poblacio.php');
 
   $cont->inserirFotos($id,$f1,$f2,$f3,$f4,$f5);
 
-  //header("Location: ../../cases");
+  header("Location: http://admin.mallorcarustic.me/cases");
+
 
 
 
