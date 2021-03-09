@@ -180,4 +180,19 @@ class User{
 
         return $result;
     }
+
+    public function getIdFromToken($token){
+        $query = "SELECT id FROM usuari WHERE token = ?;";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+
+        return $row['id'];
+
+    }
 }

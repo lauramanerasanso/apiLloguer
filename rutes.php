@@ -41,5 +41,8 @@
      'client/crear' => 'API/client/afegirClient.php',
      'reserva/informacio' => 'API/casa/selectReserva.php',
      'propietari' => 'API/user/SelectPropietari.php',
-
+     'pagament/generar' => 'API/pagament/ejemploGeneraPet.php',
+     'pagament/rebre' => 'API/pagament/ejemploRecepcionaPet.php',
+     'reserva/inserir' => 'API/casa/insertReserva.php',
+     'reserva/eliminar' => 'API/casa/deleteReserva.php'
  ]);

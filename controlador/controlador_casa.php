@@ -528,5 +528,40 @@ class controlador_casa
         echo json_encode($outp);
     }
 
+    public function insertReserva($id_casa, $token, $data_inici, $data_fi, $preu_final){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+        $user = new User($con_db);
+
+        $casa->setId($id_casa);
+
+        $data_reserva = date("Y-m-d",time());
+
+        $id_usuari = $user->getIdFromToken($token);
+        
+        $codiPag = time();
+
+        $result = $casa->insertReserva($id_usuari, $data_inici, $data_fi, $data_reserva, $preu_final, $codiPag );
+
+        if($result > 0){
+            return json_encode($codiPag);
+        }else{
+            return json_encode("ERROR");
+        }
+
+        
+    }
+
+    public function deleteReserva($codiPag){
+        $con_db = DataBase::getConn();
+        $casa = new Casa($con_db);
+
+        $result = $casa->deleteReserva($codiPag);
+        if($result > 0){
+            return json_encode("RESERVA ELIMINADA");
+        }else{
+            return json_encode("ERROR");
+        }
+    }
 
 }
