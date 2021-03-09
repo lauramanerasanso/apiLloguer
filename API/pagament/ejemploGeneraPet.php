@@ -21,8 +21,8 @@ if (isset($_POST["preu_total"])){
 	$moneda="978";
 	$trans="0";
 	$url="";
-	$urlOK="http://localhost:3000/reserves";
-	$urlKO="http://localhost:3000/pagament/rebre";
+	$urlOK="https://www.mallorcarustic.me/reserves";
+	$urlKO="https://www.mallorcarustic.me/pagament/rebre";
 	$id=time();
 	$amount="145";	
 	
