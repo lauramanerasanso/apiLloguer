@@ -372,7 +372,7 @@ class casa
     public function reserves_mesNom($mes, $nom)
     {
 
-        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND month(reserva.data_inici) = ? AND traducciocasa.traduccioNom = ?");
+        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND month(reserva.data_inici) = ? AND traduccioCasa.traduccioNom = ?");
         $stmt->bind_param("is", $mes, $nom);
         $stmt->execute();
 
@@ -384,7 +384,7 @@ class casa
     public function reserves_anyNom($any, $nom)
     {
 
-        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND year(reserva.data_inici) = ? AND traducciocasa.traduccioNom = ?");
+        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND year(reserva.data_inici) = ? AND traduccioCasa.traduccioNom = ?");
         $stmt->bind_param("is", $any, $nom);
         $stmt->execute();
 
@@ -397,7 +397,7 @@ class casa
     public function reserves_tot($mes, $any, $nom)
     {
 
-        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id  JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND month(reserva.data_inici) = ? AND year(reserva.data_inici) = ? AND traducciocasa.traduccioNom = ?");
+        $stmt = $this->conexio->prepare("SELECT casa.id, traduccioCasa.traduccioNom, reserva.data_inici, reserva.data_fi, usuari.nom as nomUsuari, usuari.llinatge1, usuari.llinatge2, usuari.DNI, usuari.telefon, usuari.email, usuari.poblacio_id, poblacio.nom as nomPoblacio, reserva.preu_final, data_reserva FROM reserva JOIN casa ON casa.id = reserva.casa_id JOIN traduccioCasa ON traduccioCasa.casa_id = casa.id JOIN usuari ON reserva.usuari_id = usuari.id  JOIN poblacio ON poblacio.id = usuari.poblacio_id WHERE NOT (reserva.id = 0) AND traduccioCasa.idioma_id = 'CA' AND month(reserva.data_inici) = ? AND year(reserva.data_inici) = ? AND traduccioCasa.traduccioNom = ?");
         $stmt->bind_param("iis", $mes, $any, $nom);
         $stmt->execute();
 
