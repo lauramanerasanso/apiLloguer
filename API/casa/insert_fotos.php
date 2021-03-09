@@ -15,7 +15,7 @@ include_once('models/classes/casa/Poblacio.php');
 
       $nom = $id."_".$contador.".jpg";
 
-      $ruta =  "../RutesLloguer/imatges/" .$nom;
+      $ruta =  "../backLloguerVacacional/imatges/" .$nom;
       $imageFileType = pathinfo($ruta, PATHINFO_EXTENSION);
       $imageFileType = strtolower($imageFileType);
       $temp = $f['tmp_name'];
