@@ -41,17 +41,20 @@ class controlador_casa
             for ($i = 0; $i < count($caract); $i++) {
 
                 $casa->insertCaract($caract[$i], $idCasa);
+
             }
 
 
         }
+        if ($insertCasa > 0) {
+
+            return true;
+
+        }else{
+            return false;
+        }
 
 
-        $result = $casa->select_info($idCasa);
-
-        $outp = $result->fetch_all(MYSQLI_ASSOC);
-
-        echo json_encode($outp);
     }
 
     public function id_Max()
@@ -141,18 +144,25 @@ class controlador_casa
 
             for ($i = 0; $i < count($caract); $i++) {
 
-                $casa->insertCaract($caract[$i], $idCasa);
+                $upcaract = $casa->insertCaract($caract[$i], $idCasa);
             }
 
-            $casa->updateTraduccio($idCasa, $desc1, $nom1, "CA");
-            $casa->updateTraduccio($idCasa, $desc2, $nom2, "EN");
+            $upd1 = $casa->updateTraduccio($idCasa, $desc1, $nom1, "CA");
+            $upd2 = $casa->updateTraduccio($idCasa, $desc2, $nom2, "EN");
 
 
         }
 
+        if ($update > 0 || $upcaract > 0 || $upd1 > 0 || $upd2 > 0) {
+
+            return true;
+
+        }else{
+            return false;
+        }
+
 
     }
-
     public function insertBloqueig($idCasa, $dataInici, $dataFi)
     {
 

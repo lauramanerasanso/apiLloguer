@@ -51,7 +51,7 @@ class casa
         $stmt->execute();
 
 
-        return $stmt;
+        return $stmt->affected_rows;
     }
 
 
@@ -86,7 +86,7 @@ class casa
         $stmt->execute();
 
 
-        return $stmt;
+        return $stmt->affected_rows;
     }
 
     public function traduccio($idCasa, $nom1, $desc1, $nom2, $desc2)
@@ -158,7 +158,7 @@ class casa
         $stmt->execute();
 
 
-        return $stmt;
+        return $stmt->affected_rows;
     }
 
     public function deleteCaract($idCasa)
@@ -179,7 +179,7 @@ class casa
         $stmt->execute();
 
 
-        return $stmt;
+        return $stmt->affected_rows;
     }
 
 

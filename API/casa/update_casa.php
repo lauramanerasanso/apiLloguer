@@ -18,6 +18,18 @@ if (isset($_POST['idCasa']) && isset($_POST['pob']) && isset($_POST['banys']) &&
 
     $array = json_decode($_POST['caract'], true);
 
-    $controlador->updateCasa($idCasa, $_POST['pob'], $_POST['banys'], $_POST['hab'], $_POST['x'], $_POST['y'], $_POST['preu'], $nom1, $nom2, $desc1, $desc2, $array);
+    $u = $controlador->updateCasa($idCasa, $_POST['pob'], $_POST['banys'], $_POST['hab'], $_POST['x'], $_POST['y'], $_POST['preu'], $nom1, $nom2, $desc1, $desc2, $array);
 
+    if ($u) {
+
+        echo json_encode([
+            'success' => true,
+
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false
+        ]);
+
+    }
 }

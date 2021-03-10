@@ -62,7 +62,7 @@ class Data{
     }
 
     public function selectDatesReserva(){
-        $sql = "SELECT count(*) as num FROM reserva WHERE casa_id=? AND ( ? BETWEEN data_inici AND data_fi);";
+        $sql = "SELECT count(*) as num FROM reserva WHERE casa_id=? AND NOT (reserva.id = 0) AND ( ? BETWEEN data_inici AND data_fi);";
 
         //SELECT data_inici, data_fi FROM bloqueig WHERE casa_id=? AND data_inici > CURRENT_DATE() OR data_fi > CURRENT_DATE()
 
@@ -188,7 +188,7 @@ class Data{
 
     public function selectDatesReservaFront(){
 
-        $sql = "SELECT YEAR(data_inici), MONTH(data_inici), DAY(data_inici), data_inici, data_fi FROM reserva WHERE casa_id=? ";
+        $sql = "SELECT YEAR(data_inici), MONTH(data_inici), DAY(data_inici), data_inici, data_fi FROM reserva WHERE NOT (reserva.id = 0) AND casa_id=? ";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $this->id_casa);
@@ -212,3 +212,4 @@ class Data{
         return $result;
     }
 }
+

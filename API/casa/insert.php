@@ -17,8 +17,21 @@ if(isset($_POST['pob']) && isset($_POST['banys']) && isset($_POST['hab']) && iss
 
     $array = json_decode($_POST['caract'],true);
 
-    $idCasa =  $controlador->insertCasa($_POST['pob'],$_POST['banys'],$_POST['hab'],$_POST['x'],$_POST['y'],$_POST['preu'],$nom1,$nom2,$desc1,$desc2,$array);
+    $c =  $controlador->insertCasa($_POST['pob'],$_POST['banys'],$_POST['hab'],$_POST['x'],$_POST['y'],$_POST['preu'],$nom1,$nom2,$desc1,$desc2,$array);
 
+    if ($c) {
+
+        echo json_encode([
+            'success' => true,
+
+
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false
+        ]);
+
+    }
 }
 
 
